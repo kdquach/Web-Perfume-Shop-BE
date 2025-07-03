@@ -1,4 +1,4 @@
-export interface Review {
+export interface ReviewInterface {
   userId: string;
   rating: number;
   comment: string;
@@ -6,7 +6,7 @@ export interface Review {
   approved: boolean;
 }
 
-export interface Product {
+export interface ProductInterface {
   _id: string;
   name: string;
   brand: string;
@@ -17,7 +17,7 @@ export interface Product {
   longevity: string;
   price: number;
   imageUrls: string[];
-  reviews: Review[];
+  reviews: ReviewInterface[];
 }
 
 // Hoặc nếu bạn muốn sử dụng ObjectId từ MongoDB

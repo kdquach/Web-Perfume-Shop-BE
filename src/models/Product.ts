@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { Product, Review } from '../interfaces/product.interface';
+import { ProductInterface, ReviewInterface } from '../interfaces/product.interface';
 
-const ReviewSchema = new Schema<Review>({
+const ReviewSchema = new Schema<ReviewInterface>({
   userId: { type: String, ref: 'User', required: true },
   rating: { type: Number, required: true },
   comment: { type: String, required: true },
@@ -9,7 +9,7 @@ const ReviewSchema = new Schema<Review>({
   approved: { type: Boolean, default: false }
 });
 
-const ProductSchema = new Schema<Product>({
+const ProductSchema = new Schema<ProductInterface>({
   name: { type: String, required: true },
   brand: { type: String, required: true },
   gender: { type: String, required: true },
@@ -22,4 +22,4 @@ const ProductSchema = new Schema<Product>({
   reviews: [ReviewSchema]
 }, { timestamps: true });
 
-export default model<Product>('Product', ProductSchema);
+export default model<ProductInterface>('Product', ProductSchema);

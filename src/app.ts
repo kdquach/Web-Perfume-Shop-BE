@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import userRoutes from './routes/user.routes';
+import productRoutes from './routes/product.routes';
+import imageProxyRouter from './routes/imageProxy';
 
 const app = express();
 
@@ -13,6 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/', userRoutes);
+app.use('/', productRoutes);
+app.use('/', imageProxyRouter);
 
 // Health check
 app.get('/health', (req, res) => {
