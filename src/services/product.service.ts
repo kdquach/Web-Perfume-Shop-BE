@@ -1,10 +1,30 @@
 import Product from '../models/Product';
 import { ProductInterface, ReviewInterface } from '../interfaces/product.interface';
 
+interface PaginationParams {
+  page?: number;
+  limit?: number;
+}
+
 // Lấy tất cả sản phẩm
-export const findAllProducts = async (): Promise<ProductInterface[]> => {
-    const products = await Product.find();
-    return products;
+export const findAllProducts = async ({ 
+  page = 1, 
+  limit = 10 
+}: PaginationParams = {}): Promise<{
+  data: ProductInterface[];
+  total: number;
+}> => {
+  const skip = (page - 1) * limit;
+  
+  const [products, total] = await Promise.all([
+    Product.find().skip(skip).limit(limit).exec(),
+    Product.countDocuments().exec()
+  ]);
+
+  return {
+    data: products,
+    total
+  };
 };
 
 // Lấy sản phẩm theo id
@@ -32,7 +52,7 @@ export const removeProduct = async (id: string): Promise<ProductInterface | null
 };
 
 // Thêm review cho sản phẩm
-export const addReview = async (
+export const addReview = async (    
     productId: string,
     review: ProductInterface
 ): Promise<ProductInterface | null> => {
